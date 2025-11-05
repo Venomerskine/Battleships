@@ -1,4 +1,4 @@
-class Ship {
+export class Ship {
     constructor(id, size, startX, startY, orientation = 'horizontal') {
         this.id = id;
         this.size = size;
@@ -29,7 +29,7 @@ class Ship {
     }
 }
 
-class Battlefield {
+export class Battlefield {
     constructor(width, height, shipsData) {
         this.width = width;
         this.height = height;
@@ -107,7 +107,7 @@ class Battlefield {
     }
 }
 
-class Player {
+export class Player {
     constructor(name, isComputer = false, battlefieldConfig) {
         this.name = name;
         this.isComputer = isComputer;
@@ -178,3 +178,6 @@ class Player {
         return this.battlefield.checkVictory().allSunk;
     }
 }
+
+
+
