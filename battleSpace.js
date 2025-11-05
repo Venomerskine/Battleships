@@ -106,3 +106,75 @@ class Battlefield {
         }));
     }
 }
+
+class Player {
+    constructor(name, isComputer = false, battlefieldConfig) {
+        this.name = name;
+        this.isComputer = isComputer;
+        this.battlefield = new Battlefield(
+            battlefieldConfig.width,
+            battlefieldConfig.height,
+            battlefieldConfig.ships
+        );
+        this.previousShots = new Set(); // Track fired coordinates
+    }
+
+    /**
+     * Fire at a coordinate on the opponent's battlefield.
+     * @param {Player} opponent - The opposing player.
+     * @param {number} x - X-coordinate of the shot.
+     * @param {number} y - Y-coordinate of the shot.
+     * @returns {object} - Result of the shot.
+     */
+    fireAt(opponent, x, y) {
+        const key = `${x},${y}`;
+
+        if (this.previousShots.has(key)) {
+            return { result: "duplicate", message: `${this.name} already fired at (${x}, ${y}).` };
+        }
+
+        this.previousShots.add(key);
+        const result = opponent.battlefield.fire(x, y);
+        return { attacker: this.name, ...result };
+    }
+
+    /**
+     * Generates a random valid target (for computer player).
+     * Ensures no duplicate firing.
+     * @returns {object} { x, y }
+     */
+    getRandomTarget() {
+        const width = this.battlefield.width;
+        const height = this.battlefield.height;
+        let x, y, key;
+
+        do {
+            x = Math.floor(Math.random() * width);
+            y = Math.floor(Math.random() * height);
+            key = `${x},${y}`;
+        } while (this.previousShots.has(key));
+
+        return { x, y };
+    }
+
+    /**
+     * Computer automatically fires on the opponent.
+     * @param {Player} opponent
+     * @returns {object} - Result of the shot.
+     */
+    autoFire(opponent) {
+        if (!this.isComputer) {
+            throw new Error(`${this.name} is not a computer player.`);
+        }
+        const { x, y } = this.getRandomTarget();
+        return this.fireAt(opponent, x, y);
+    }
+
+    /**
+     * Checks if all ships are sunk.
+     * @returns {boolean}
+     */
+    hasLost() {
+        return this.battlefield.checkVictory().allSunk;
+    }
+}
