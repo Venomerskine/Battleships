@@ -11,7 +11,6 @@ export class Ship {
 
     takeHit() {
         if (this.isSunk) return { status: "sunk", message: "Ship already sunk" };
-
         this.hits++;
         if (this.hits >= this.size) {
             this.isSunk = true;
