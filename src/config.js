@@ -13,7 +13,7 @@ function createRandomShipLayout(shipSizes, width, height) {
     ];
     return layout;
 }
-const HUMAN_SHIP_LAYOUT = [
+export const HUMAN_SHIP_LAYOUT = [
     { size: 5, x: 2, y: 2, orientation: 'horizontal' },
     { size: 4, x: 5, y: 7, orientation: 'vertical' },
     { size: 3, x: 0, y: 9, orientation: 'horizontal' },
@@ -21,4 +21,4 @@ const HUMAN_SHIP_LAYOUT = [
     { size: 2, x: 0, y: 0, orientation: 'vertical' }
 ];
 
-const COMPUTER_SHIP_LAYOUT = createRandomShipLayout(SHIP_SIZES, BOARD_WIDTH, BOARD_HEIGHT);
+export const COMPUTER_SHIP_LAYOUT = createRandomShipLayout(SHIP_SIZES, BOARD_WIDTH, BOARD_HEIGHT);

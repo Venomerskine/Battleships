@@ -104,6 +104,35 @@ export class Battlefield {
             status: s.isSunk ? "SUNK" : "AFLOAT"
         }));
     }
+
+    getCellStatus(x, y) {
+    // 1. Out-of-bounds → ocean (no cell here)
+    if (x < 0 || x >= this.width || y < 0 || y >= this.height) {
+        return "out_of_bounds";
+    }
+
+    const key = `${x},${y}`;
+    const wasAttacked = this.attacks.has(key);
+
+    // 2. Check if any ship occupies this cell
+    const ship = this.ships.find(s => s.occupiesCell(x, y));
+
+    // 3. Determine status logically (without altering game state)
+    if (wasAttacked) {
+        if (ship) {
+            return ship.isSunk ? "sunk" : "hit";
+        } else {
+            return "miss";
+        }
+    } else {
+        if (ship) {
+            return "ship"; // Only visible if showShips = true
+        } else {
+            return "empty";
+        }
+    }
+}
+
 }
 
 export class Player {
