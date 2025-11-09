@@ -1,5 +1,5 @@
 import { Ship, Battlefield, Player } from "./battleSpace.js";
-import { HUMAN_SHIP_LAYOUT, COMPUTER_SHIP_LAYOUT } from './config.js';
+import { HUMAN_SHIP_LAYOUT, COMPUTER_SHIP_LAYOUT, BOARD_WIDTH, BOARD_HEIGHT} from './config.js';
 
 
 export class GameController{
@@ -46,29 +46,27 @@ renderInitialBoards() {
         console.log(this.getBoardVisualization(this.computerPlayer.battlefield, false));
     }
 
+
     getBoardVisualization(battlefield, showShips = false) {
         let boardString = '';
         for (let y = 0; y < battlefield.height; y++) {
             for (let x = 0; x < battlefield.width; x++) {
-                let cell = 'O'; // Ocean
+                let cell = 'O'; 
 
-                if (showShips) {
-                    const ship = battlefield.ships.find(s => s.occupiesCell(x, y));
-                    if (ship) {
-                        cell = 'S'; // Ship
-                    }
+                const status = battlefield.getCellStatus(x, y);
+
+                if (showShips && status === 'ship') {
+                    cell = 'S'; 
                 }
          
-                const attackKey = `${x},${y}`;
-                if (battlefield.attacks.has(attackKey)) {
-
-                    const status = battlefield.getCellStatus(x, y);
-
-                    if (status === 'ship') cell = 'S';
-                    else if (status === 'hit') cell = 'X';
-                    else if (status === 'sunk') cell = '#';
-                    else if (status === 'miss') cell = 'M';
-                    else cell = 'O'; // empty or ocean
+                if (battlefield.attacks.has(`${x},${y}`)) {
+                    if (status === 'hit') {
+                        cell = 'X'; 
+                    } else if (status === 'sunk') {
+                        cell = '#';
+                    } else if (status === 'miss') {
+                        cell = 'M'; 
+                    } 
 
                 }
 
@@ -90,20 +88,24 @@ renderInitialBoards() {
 
         if (attacker.isComputer){
             result = attacker.autoFire(defender)
+
+            x = result.x; 
+            y = result.y;
         } else{
             if (x === null || y === null) {
-                console.error("Human turn requires (x, y cordinates." );
+                console.error("Human turn requires (x, y) coordinates.");
                 return
             }
             result = attacker.fireAt(defender, x, y)
         }
 
         console.log(`${result.attacker} fires at (${x}, ${y}): ${result.message}`);
-        this.renderInitialBoards()
+        this.renderBoards()
 
         if(defender.hasLost()){
             this.gameStatus = 'finished';
             console.log(`*** ${attacker.name} wins the game! ***`)
+            callback();
             return
         }
 
@@ -111,11 +113,22 @@ renderInitialBoards() {
         console.log(`\n--- Turn switch. It is now the ${this.currentPlayer.name}'s turn ---`)
 
         if (this.currentPlayer.isComputer) {
-            setTimeout(() => this.handleTurn(), 500);
+            setTimeout(() => {
+                this.handleTurn(null, null, callback); 
+            }, 500);
+        } else {
+            callback();
         }
     }
 
+renderBoards() {
+        console.log(`\n--- Boards Update ---`);
+        console.log(`Human's Board (Own Ships):`);
+        console.log(this.getBoardVisualization(this.humanPlayer.battlefield, true));
 
+        console.log(`\nComputer's Board (Target Board):`);
+        console.log(this.getBoardVisualization(this.computerPlayer.battlefield, false));
+    }
 
 } 
 

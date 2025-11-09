@@ -195,7 +195,14 @@ export class Player {
             throw new Error(`${this.name} is not a computer player.`);
         }
         const { x, y } = this.getRandomTarget();
-        return this.fireAt(opponent, x, y);
+        const result = this.fireAt(opponent, x, y);
+
+       return { 
+            x, 
+            y,
+            attacker: this.name, 
+            ...result 
+        };
     }
 
     /**

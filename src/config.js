@@ -15,7 +15,7 @@ function createRandomShipLayout(shipSizes, width, height) {
 }
 export const HUMAN_SHIP_LAYOUT = [
     { size: 5, x: 2, y: 2, orientation: 'horizontal' },
-    { size: 4, x: 5, y: 7, orientation: 'vertical' },
+    { size: 4, x: 5, y: 5, orientation: 'vertical' },
     { size: 3, x: 0, y: 9, orientation: 'horizontal' },
     { size: 3, x: 9, y: 0, orientation: 'vertical' },
     { size: 2, x: 0, y: 0, orientation: 'vertical' }
