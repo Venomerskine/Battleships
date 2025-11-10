@@ -32,5 +32,22 @@ main {
   cursor: pointer;
 }
 
-.battleSpc div.hit { background: red; }
-.battleSpc div.miss { background: white; }
+.ship {
+    background-color: #4CAF50 !important; 
+}
+
+.hit {
+    background-color: orange !important;
+}
+
+.miss {
+    background-color: white !important;
+}
+
+.sunk {
+    background-color: red !important;
+}
+
+#cmpSpc div:hover {
+    background-color: #0099ff;
+}
