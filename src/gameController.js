@@ -76,7 +76,7 @@ renderInitialBoards() {
         }
         return boardString;
     }
-    handleTurn(x = null, y = null){
+    handleTurn(x = null, y = null, callback){
         if (this.gameStatus != 'playing'){
             console.log(`Game is ${this.gameStatus}. Cannot take turn`);
         return

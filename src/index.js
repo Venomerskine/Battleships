@@ -3,7 +3,7 @@
 import { GameController } from './gameController.js';
 import readline from 'readline';
 
-const game = new GameController();
+ const game = new GameController();
 
 const rl = readline.createInterface({
   input: process.stdin,
