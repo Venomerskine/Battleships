@@ -6,6 +6,7 @@ const BOARD_SIZE = 10;
 const game = new GameController();
 
 const placement = new PlacementController(game, 'hmnSpc');
+placement.enable()
 
 
 function createDivs(n, parentId) {

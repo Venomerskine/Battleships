@@ -3,40 +3,32 @@ import { HUMAN_SHIP_LAYOUT, COMPUTER_SHIP_LAYOUT, BOARD_WIDTH, BOARD_HEIGHT} fro
 
 
 export class GameController{
-    constructor(){
+    constructor() {
         this.humanPlayer = null;
         this.computerPlayer = null;
-        this.currentPlayer = null; 
-        this.gameStatus = 'initializing';
-        this.initializeGame();  
+        this.currentPlayer = null;
+        this.gameStatus = "placement"; 
     }
 
-    initializeGame() {
-        console.log("Initializing game...");
 
-        // 1. Define battlefield configuration
+    startGame(humanLayout, computerLayout) {
         const commonConfig = {
             width: BOARD_WIDTH,
             height: BOARD_HEIGHT
         };
 
-        // 2. Create the Human Player
-        const humanConfig = { ...commonConfig, ships: HUMAN_SHIP_LAYOUT };
+        const humanConfig = { ...commonConfig, ships: humanLayout };
         this.humanPlayer = new Player("Human", false, humanConfig);
-        console.log("Human Player created with battlefield.");
 
-        // 3. Create the Computer Player
-        const computerConfig = { ...commonConfig, ships: COMPUTER_SHIP_LAYOUT };
+        const computerConfig = { ...commonConfig, ships: computerLayout };
         this.computerPlayer = new Player("Computer", true, computerConfig);
-        console.log("Computer Player created with battlefield.");
 
-        // 4. Set initial turn
-        this.currentPlayer = this.humanPlayer; // Human typically goes first
-        this.gameStatus = 'playing';
-        console.log(`Game started. It is the ${this.currentPlayer.name}'s turn.`);
+        this.currentPlayer = this.humanPlayer;
+        this.gameStatus = "playing";
 
         this.renderInitialBoards();
-    }
+}
+
 
 renderInitialBoards() {
         console.log(`Human's Board (Own Ships):`);

@@ -65,4 +65,8 @@ export class PlacementController {
       cell.style.backgroundColor = 'lightgreen';
     }
   }
+
+  enable(){
+    
+  }
 }
