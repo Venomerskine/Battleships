@@ -3,28 +3,35 @@
     padding: 0;
     box-sizing: border-box;
 }
+body{
+    background-color: #044b7a;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
 
 main {
   display: flex;
   justify-content: center;
   gap: 40px;
   margin-top: 50px;
+  background-color: #044b7a;
 }
 
 
 .battleSpc{
-    background-color: #39b5e6;
+    background-color: #044b7a;
     display: grid;
     grid-template-columns: repeat(10, 30px);
     grid-template-rows: repeat(10, 30px);
     gap: 2px;
-    border: 2px solid #000;
+    border: 1px solid #000;
 }
 
 .battleSpc div {
   width: 30px;
   height: 30px;
-  background-color: #a8d0e6;
+  background-color: #0a77c0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -50,4 +57,27 @@ main {
 
 #cmpSpc div:hover {
     background-color: #0099ff;
+}
+
+button{
+    padding: 4px;
+    background-color: #ca5430;
+    color: #86c6df;
+    font-size: 25px;
+    font-weight: 700;
+    border-radius: 5px;
+    border: 0;
+    transition: ease-in-out;
+}
+
+button:hover{
+  transform: scale(1.05);
+  background-color: #bb4c2b;
+  color: #23ade4;
+}
+
+.btn{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
 }
