@@ -1,7 +1,7 @@
 import { GameController } from "../src/gameController.js";
-const BOARD_SIZE = game.humanPlayer.battlefield.width;
-const game = new GameController();
 
+const BOARD_SIZE = 10;
+const game = new GameController();
 
 
 function createDivs(n, parentId) {
@@ -75,7 +75,7 @@ function handleTurnCallback() {
     document.getElementById('cmpSpc').style.pointerEvents = 'none'; 
     setTimeout(() => {
       game.handleTurn(null, null, handleTurnCallback); 
-    }, 500);
+    }, 2000);
 
   } else {
     document.getElementById('cmpSpc').style.pointerEvents = 'auto'; 
@@ -99,3 +99,8 @@ document.getElementById('cmpSpc').addEventListener('click', (e) => {
     game.handleTurn(x, y, handleTurnCallback); 
   }
 });
+
+document.getElementById('reset').addEventListener('click', () => location.reload());
+function setStatus(message) {
+  document.getElementById('status').textContent = message;
+}
