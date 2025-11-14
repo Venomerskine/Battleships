@@ -1,7 +1,11 @@
 import { GameController } from "../src/gameController.js";
+import { PlacementController } from '../src/PlacementController.js';
+
 
 const BOARD_SIZE = 10;
 const game = new GameController();
+
+const placement = new PlacementController(game, 'hmnSpc');
 
 
 function createDivs(n, parentId) {
@@ -81,6 +85,7 @@ function handleTurnCallback() {
     document.getElementById('cmpSpc').style.pointerEvents = 'auto'; 
   }
 }
+
 
 updateBoards();
 
