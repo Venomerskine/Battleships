@@ -32,7 +32,7 @@ export class PlacementController {
 
     if (this.currentShipIndex >= SHIP_SIZES.length) {
       this.boardElement.removeEventListener('click', this.handleClick);
-      this.game.startBattle(this.placements);
+      this.game.startGame(this.placements);
     }
   }
 
@@ -67,6 +67,6 @@ export class PlacementController {
   }
 
   enable(){
-    
+
   }
 }

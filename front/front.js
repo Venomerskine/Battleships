@@ -1,5 +1,6 @@
 import { GameController } from "../src/gameController.js";
 import { PlacementController } from '../src/PlacementController.js';
+import {COMPUTER_SHIP_LAYOUT} from '../src/config.js'
 
 
 const BOARD_SIZE = 10;
@@ -113,7 +114,7 @@ document.getElementById("startGame").addEventListener("click", () => {
         alert("Place all ships first!");
         return;
     }
-    const computerLayout = game.generateRandomLayout();  
+    const computerLayout = COMPUTER_SHIP_LAYOUT;  
   
     game.startGame(humanLayout, computerLayout);
 
