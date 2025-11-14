@@ -4,17 +4,33 @@ export class PlacementController {
   constructor(game, boardId) {
     this.game = game;
     this.boardElement = document.getElementById(boardId);
+
+    if (!this.boardElement) {
+      throw new Error(`PlacementController: board element "${boardId}" not found.`);
+    }
+
     this.currentShipIndex = 0;
     this.orientation = 'horizontal';
     this.placements = [];
-    
-    document.addEventListener('keydown', (e) => {
-      if (e.key.toLowerCase() === 'r') {
-        this.orientation = this.orientation === 'horizontal' ? 'vertical' : 'horizontal';
-      }
-    });
+    this.handleClickBound = this.handleClick.bind(this);
+    this.handleRotateBound = this.handleRotate.bind(this);
+  }
 
-    this.boardElement.addEventListener('click', this.handleClick.bind(this));
+  enable() {
+    this.boardElement.addEventListener('click', this.handleClickBound);
+    document.addEventListener('keydown', this.handleRotateBound);
+  }
+
+  disable() {
+    this.boardElement.removeEventListener('click', this.handleClickBound);
+    document.removeEventListener('keydown', this.handleRotateBound);
+  }
+
+  handleRotate(e) {
+    if (e.key.toLowerCase() === 'r') {
+      this.orientation =
+        this.orientation === 'horizontal' ? 'vertical' : 'horizontal';
+    }
   }
 
   handleClick(e) {
@@ -25,14 +41,14 @@ export class PlacementController {
     const y = parseInt(e.target.dataset.y);
     const size = SHIP_SIZES[this.currentShipIndex];
 
-    if (this.isValidPlacement(x, y, size)) {
-      this.placeShip(x, y, size);
-      this.currentShipIndex++;
-    }
+    if (!this.isValidPlacement(x, y, size)) return;
+
+    this.placeShip(x, y, size);
+    this.currentShipIndex++;
 
     if (this.currentShipIndex >= SHIP_SIZES.length) {
-      this.boardElement.removeEventListener('click', this.handleClick);
-      this.game.startGame(this.placements);
+      this.disable();
+      this.game.startGame(this.getHumanLayout());
     }
   }
 
@@ -44,6 +60,7 @@ export class PlacementController {
       for (let i = 0; i < size; i++) {
         const newX = this.orientation === 'horizontal' ? x + i : x;
         const newY = this.orientation === 'vertical' ? y + i : y;
+
         for (let j = 0; j < ship.size; j++) {
           const shipX = ship.orientation === 'horizontal' ? ship.x + j : ship.x;
           const shipY = ship.orientation === 'vertical' ? ship.y + j : ship.y;
@@ -56,21 +73,25 @@ export class PlacementController {
   }
 
   placeShip(x, y, size) {
-    this.placements.push({ x, y, size, orientation: this.orientation });
+    this.placements.push({
+      x,
+      y,
+      size,
+      orientation: this.orientation,
+    });
 
     for (let i = 0; i < size; i++) {
-      const divX = this.orientation === 'horizontal' ? x + i : x;
-      const divY = this.orientation === 'vertical' ? y + i : y;
-      const cell = this.boardElement.querySelector(`[data-x="${divX}"][data-y="${divY}"]`);
-      cell.style.backgroundColor = 'lightgreen';
+      const px = this.orientation === 'horizontal' ? x + i : x;
+      const py = this.orientation === 'vertical' ? y + i : y;
+      const cell = this.boardElement.querySelector(
+        `[data-x="${px}"][data-y="${py}"]`
+      );
+      if (cell) cell.style.backgroundColor = 'lightgreen';
     }
   }
 
-  enable(){
-
+  getHumanLayout() {
+    return this.placements;
   }
-  
-getHumanLayout() {
-  return this.placements;
 }
-}
+
