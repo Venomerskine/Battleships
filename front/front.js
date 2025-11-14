@@ -89,7 +89,7 @@ function handleTurnCallback() {
 }
 
 
-updateBoards();
+// updateBoards();
 
 document.getElementById('cmpSpc').addEventListener('click', (e) => {
   if (e.target.matches('div') && game.currentPlayer.name === 'Human') {

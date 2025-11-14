@@ -69,4 +69,8 @@ export class PlacementController {
   enable(){
 
   }
+  
+getHumanLayout() {
+  return this.placements;
+}
 }

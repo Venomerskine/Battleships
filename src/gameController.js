@@ -107,7 +107,7 @@ renderInitialBoards() {
         if (this.currentPlayer.isComputer) {
             setTimeout(() => {
                 this.handleTurn(null, null, callback); 
-            }, 500);
+            }, 2000);
         } else {
             callback();
         }
