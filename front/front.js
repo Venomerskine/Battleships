@@ -6,9 +6,6 @@ import {COMPUTER_SHIP_LAYOUT} from '../src/config.js'
 const BOARD_SIZE = 10;
 const game = new GameController();
 
-const placement = new PlacementController(game, 'hmnSpc');
-placement.enable()
-
 
 function createDivs(n, parentId) {
   const container = document.getElementById(parentId);
@@ -26,6 +23,8 @@ function createDivs(n, parentId) {
 createDivs(BOARD_SIZE * BOARD_SIZE, 'hmnSpc');
 createDivs(BOARD_SIZE * BOARD_SIZE, 'cmpSpc');
 
+const placement = new PlacementController(game, 'hmnSpc');
+placement.enable()
 
 
 function updateCell(cell, status) {
