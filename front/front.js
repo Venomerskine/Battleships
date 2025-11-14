@@ -106,6 +106,21 @@ document.getElementById('cmpSpc').addEventListener('click', (e) => {
   }
 });
 
+document.getElementById("startGame").addEventListener("click", () => {
+    const humanLayout = placement.getHumanLayout(); 
+
+    if (!humanLayout || humanLayout.length === 0) {
+        alert("Place all ships first!");
+        return;
+    }
+    const computerLayout = game.generateRandomLayout();  
+  
+    game.startGame(humanLayout, computerLayout);
+
+    updateBoards();
+});
+
+
 document.getElementById('reset').addEventListener('click', () => location.reload());
 function setStatus(message) {
   document.getElementById('status').textContent = message;
